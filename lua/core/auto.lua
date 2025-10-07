@@ -6,6 +6,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+vim.api.nvim_create_user_command("Update", function()
+  vim.pack.update()
+end, {})
+
 -- Create a single LspAttach autocmd for keymaps + completion
 local lsp_group = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
 vim.api.nvim_create_autocmd('LspAttach', {

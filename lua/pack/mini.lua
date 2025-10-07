@@ -1,5 +1,5 @@
 vim.pack.add({
-  { src = "https://github.com/nvim-mini/mini.nvim", version = "main" },
+  { src = "https://github.com/nvim-mini/mini.nvim", branch = "main" },
 })
 
 -- ===== Basics =====
