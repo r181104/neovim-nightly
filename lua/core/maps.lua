@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 local map = vim.keymap.set
+local vim = vim
 
 -- General
 map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>")
@@ -12,6 +13,9 @@ map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>")
 map("n", "<leader>rr", ":restart<CR>")
 map("n", "<leader>w", ":write<CR>", { desc = "Save file" })
 map("n", "<leader>q", ":quit<CR>", { desc = "Quit" })
+map("n", "<leader>bc", ":enew<CR>")
+map("n", "<leader>bn", ":bn<CR>")
+map("n", "<leader>bp", ":bp<CR>")
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("n", "<C-c>", "<cmd>nohlsearch<CR>")
 map({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true, desc = "Yank to system clipboard" })
