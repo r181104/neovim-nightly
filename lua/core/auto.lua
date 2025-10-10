@@ -84,7 +84,7 @@ vim.diagnostic.config({
 -- Create a custom command :LiveServer
 vim.api.nvim_create_user_command("LiveServer", function()
 	local cwd = vim.fn.getcwd()
-	vim.fn.jobstart({ "live-server", "--port=8000", "--no-browser", cwd }, { detach = true })
+	vim.fn.jobstart({ "live-server", "--port=8000", "--host=localhost" }, { cwd = cwd, detach = true })
 	print("🚀 Live Server born at http://localhost:8000")
 end, {})
 
