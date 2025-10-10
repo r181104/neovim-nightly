@@ -1,12 +1,12 @@
 vim.pack.add({
-  { src = "https://github.com/lewis6991/gitsigns.nvim", event = "VeryLazy" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim", event = "VeryLazy" },
 })
 require("gitsigns").setup({
-  signs = {
-    add = { text = "+" },
-    change = { text = "~" },
-    delete = { text = "_" },
-    topdelete = { text = "‾" },
-    changedelete = { text = "~" },
-  },
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "_" },
+		topdelete = { text = "‾" },
+		changedelete = { text = "~" },
+	},
 })

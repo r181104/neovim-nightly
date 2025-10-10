@@ -31,19 +31,19 @@ map("n", "N", "Nzzzv")
 
 -- Conform
 map({ "n", "v" }, "<leader>fm", function()
-  require("conform").format({
-    async = true,
-    lsp_fallback = true,
-    timeout_ms = 500,
-  })
+	require("conform").format({
+		async = true,
+		lsp_fallback = true,
+		timeout_ms = 500,
+	})
 end, { desc = "[F]or[m]at buffer" })
 map("v", "<leader>f", function()
-  require("conform").format({
-    async = true,
-    lsp_fallback = true,
-    range = {
-      ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-      ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-    },
-  })
+	require("conform").format({
+		async = true,
+		lsp_fallback = true,
+		range = {
+			["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+			["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+		},
+	})
 end, { desc = "[F]ormat selection" })

@@ -1,13 +1,17 @@
 vim.pack.add({
-  { src = 'https://github.com/neovim/nvim-lspconfig' },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
 })
--- Enable LSP servers using nightly builtin API
+
+-- Import blink's capabilities
+local blink_caps = require("pack.completion").capabilities
+
+-- Enable builtin LSP with blink capabilities
 vim.lsp.enable({
-  'lua_ls',
-  'pyright',
-  'clangd',
-  'jdtls',
-  'rust_analyzer',
-  'vtsls',
-  'tailwindcss',
-})
+	"lua_ls",
+	"pyright",
+	"clangd",
+	"jdtls",
+	"rust_analyzer",
+	"vtsls",
+	"tailwindcss",
+}, { capabilities = blink_caps })
