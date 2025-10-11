@@ -20,14 +20,35 @@ require("mini.basics").setup({
 
 -- ===== Comment =====
 require("mini.comment").setup({
+	options = {
+		ignore_blank_line = true,
+	},
 	mappings = {
-		comment = "<leader>/",
+		comment = "gc",
 		comment_line = "<leader>c",
+		textobject = "gc",
+	},
+	hooks = {
+		pre = nil,
+		post = nil,
 	},
 })
 
 -- ===== Pairs =====
-require("mini.pairs").setup({})
+require("mini.pairs").setup({
+	mappings = {
+		["("] = { action = "open", pair = "()" },
+		["["] = { action = "open", pair = "[]" },
+		["{"] = { action = "open", pair = "{}" },
+		['"'] = { action = "open", pair = '""', neigh_pattern = "[^%s]" },
+		["'"] = { action = "open", pair = "''", neigh_pattern = "[^%s]" },
+		["`"] = { action = "open", pair = "``", neigh_pattern = "[^%s]" },
+	},
+	options = {
+		ignore_bracket_line = true, -- don't add closing pair if it would cross line
+		move_cursor_inside_quotes = true, -- move inside quotes when pressing the pair key
+	},
+})
 
 -- ===== AI & Operators =====
 require("mini.ai").setup({ n_lines = 500, custom_textobjects = nil })
@@ -46,28 +67,55 @@ end, { desc = "Jump2d" })
 
 -- ===== Pick & Extra =====
 local pick = require("mini.pick")
-pick.setup()
-require("mini.extra").setup()
-
+local extra = require("mini.extra")
+pick.setup({
+	window = {
+		width = 0.8,
+		height = 0.4,
+		border = "rounded",
+		winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+		row = 0.3,
+		col = 0.2,
+	},
+	prompt = "➤ ",
+})
+extra.setup()
+local opts = { desc = "Fuzzy finder style mini.pick", noremap = true, silent = true }
 vim.keymap.set("n", "<leader>ff", function()
-	pick.builtin.files({ prompt = "Find Files> ", previewer = "builtin", cwd = vim.loop.cwd() })
-end, { desc = "Find files" })
-
+	pick.builtin.files({
+		prompt = "Find Files> ",
+		previewer = "builtin",
+		cwd = vim.loop.cwd(),
+		window = { width = 0.7, height = 0.5, border = "rounded" },
+	})
+end, opts)
 vim.keymap.set("n", "<leader>fh", function()
 	pick.builtin.grep_live({
 		prompt = "Live Grep> ",
 		search_cmd = "rg --vimgrep --smart-case",
 		cwd = vim.loop.cwd(),
+		window = { width = 0.7, height = 0.5, border = "rounded" },
 	})
-end, { desc = "Live grep" })
-
+end, opts)
 vim.keymap.set("n", "<leader>fb", function()
-	pick.builtin.buffers({ prompt = "Buffers> ", previewer = "builtin" })
-end, { desc = "Buffers" })
-
+	pick.builtin.buffers({
+		prompt = "Buffers> ",
+		previewer = "builtin",
+		window = { width = 0.6, height = 0.4, border = "rounded" },
+	})
+end, opts)
 vim.keymap.set("n", "<leader>fp", function()
-	pick.builtin.help({ prompt = "Help> ", previewer = "builtin" })
-end, { desc = "Help tags" })
+	pick.builtin.help({
+		prompt = "Help> ",
+		previewer = "builtin",
+		window = { width = 0.6, height = 0.4, border = "rounded" },
+	})
+end, opts)
+vim.cmd([[
+highlight MiniPickPrompt guifg=#FF9E64 guibg=#1E1E2E gui=bold
+highlight MiniPickItem guifg=#C0CAF5 guibg=#1E1E2E
+highlight MiniPickItemSelected guifg=#1E1E2E guibg=#FF9E64 gui=bold
+]])
 
 -- ===== Indents & Highlight =====
 require("mini.indentscope").setup({
@@ -77,16 +125,32 @@ require("mini.indentscope").setup({
 			return 0
 		end,
 	},
-	symbol = "│",
+	symbol = "┋",
+	options = {
+		try_as_border = true,
+	},
 })
 
 require("mini.hipatterns").setup({
 	highlighters = {
 		hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-		fixme = { pattern = "%f[%w](TODO|FIXME|BUG):", group = "Todo" },
+		fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+		hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+		todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+		note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+		numbers = { pattern = "%d+", group = "Number" },
+		important = { pattern = "IMPORTANT", group = "WarningMsg" },
+		comment_todo = {
+			pattern = "%f[%w](TODO|FIXME|BUG):",
+			group = "Comment",
+			callback = function(text)
+				return text:match("^%s*[%#/%-%s]+") ~= nil
+			end,
+		},
 	},
 })
 
+-- ===== Buffers =====
 require("mini.bufremove").setup()
 vim.keymap.set("n", "<leader>bd", function()
 	require("mini.bufremove").delete(0, false)
