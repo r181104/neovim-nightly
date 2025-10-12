@@ -58,13 +58,6 @@ vim.keymap.set("n", "gx", "<Plug>(mini-operators-exchange)", { desc = "Exchange"
 vim.keymap.set("n", "gs", "<Plug>(mini-operators-sort)", { desc = "Sort" })
 vim.keymap.set("n", "gD", "<Plug>(mini-operators-duplicate)", { desc = "Duplicate" })
 
--- ===== Jump2d =====
-local jump2d = require("mini.jump2d")
-jump2d.setup()
-vim.keymap.set("n", "<leader>j", function()
-	jump2d.start()
-end, { desc = "Jump2d" })
-
 -- ===== Pick & Extra =====
 local pick = require("mini.pick")
 local extra = require("mini.extra")

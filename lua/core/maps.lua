@@ -3,26 +3,31 @@ vim.g.maplocalleader = "\\"
 
 local map = vim.keymap.set
 local vim = vim
+local opts = { noremap = true, silent = true }
 
 -- General
-map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>")
-map("n", ";", ":")
-map("n", "<leader>cd", vim.cmd.Ex)
-map("n", "<leader>so", ":update<CR> :source<CR>")
-map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>")
-map("n", "<leader>rr", ":restart<CR>")
-map("n", "<leader>w", ":write<CR>", { desc = "Save file" })
-map("n", "<leader>q", ":quit<CR>", { desc = "Quit" })
-map("n", "<leader>bc", ":enew<CR>")
-map("n", "<leader>bn", ":bn<CR>")
-map("n", "<leader>bp", ":bp<CR>")
-map("n", "<Esc>", "<cmd>nohlsearch<CR>")
-map("n", "<C-c>", "<cmd>nohlsearch<CR>")
-map({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true, desc = "Yank to system clipboard" })
+map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>", opts)
+map("n", ";", ":", opts)
+map("n", "<leader>cd", vim.cmd.Ex, opts)
+map("n", "<leader>so", ":update<CR> :source<CR>", opts)
+map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>", opts)
+map("n", "<leader>rr", ":restart<CR>", opts)
+map("n", "<leader>w", ":write<CR>", opts)
+map("n", "<leader>q", ":quit<CR>", opts)
+map("n", "<leader>bc", ":enew<CR>", opts)
+map("n", "<leader>bn", ":bn<CR>", opts)
+map("n", "<leader>bp", ":bp<CR>", opts)
+map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts)
+map("n", "<C-c>", "<cmd>nohlsearch<CR>", opts)
+map({ "n", "v" }, "<Leader>y", '"+y', opts)
+map("n", "<C-h>", "<C-w>h", opts)
+map("n", "<C-j>", "<C-w>j", opts)
+map("n", "<C-k>", "<C-w>k", opts)
+map("n", "<C-l>", "<C-w>l", opts)
 
 -- Prime's remaps
-map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv")
 map("n", "J", "mzJ`z")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
