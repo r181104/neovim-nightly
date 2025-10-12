@@ -103,7 +103,7 @@ The leader key is set to `space`.
 2.  Start Neovim. The plugins will be installed automatically.
 
 ```bash
-git clone https://github.com/your-username/neovim-nightly.git ~/.config/nvim
+git clone https://github.com/r181104/neovim-nightly.git ~/.config/nvim
 ```
 
 ## 📸 Screenshots
@@ -112,7 +112,7 @@ git clone https://github.com/your-username/neovim-nightly.git ~/.config/nvim
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/neovim-nightly/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/r181104/neovim-nightly/issues).
 
 ## 📜 License
 
