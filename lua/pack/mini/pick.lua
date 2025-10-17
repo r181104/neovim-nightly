@@ -58,28 +58,22 @@ vim.keymap.set("n", "<leader>fg", function()
 	extra.pickers.git_files({}, { source = { name = "Git Files" } })
 end, { desc = "Git files", noremap = true, silent = true })
 
--- One Dark Pro refined color scheme for mini.pick
-vim.cmd([[
-  " Main window and border
-  highlight MiniPickNormal guifg=#abb2bf guibg=#282c34
-  highlight MiniPickBorder guifg=#61afef guibg=#282c34
-  highlight MiniPickBorderBusy guifg=#e5c07b guibg=#282c34
-  highlight MiniPickBorderText guifg=#61afef guibg=#282c34 gui=bold
-  " Prompt area (yellow for visibility)
-  highlight MiniPickPrompt guifg=#e5c07b guibg=#282c34 gui=bold
-  " Items in the list
-  highlight MiniPickItem guifg=#abb2bf guibg=NONE
-  highlight MiniPickItemSelected guifg=#282c34 guibg=#61afef gui=bold
-  highlight MiniPickItemMarked guifg=#282c34 guibg=#98c379
-  " Match highlighting (cyan and purple for different match types)
-  highlight MiniPickMatchCurrent guifg=#56b6c2 guibg=NONE gui=bold,underline
-  highlight MiniPickMatchMarked guifg=#c678dd guibg=NONE gui=bold
-  highlight MiniPickMatchRanges guifg=#e5c07b guibg=NONE gui=bold
-  " Header info
-  highlight MiniPickHeader guifg=#61afef guibg=#282c34 gui=bold
-  highlight MiniPickIconDirectory guifg=#61afef
-  highlight MiniPickIconFile guifg=#abb2bf
-  " Preview window
-  highlight MiniPickPreviewLine guibg=#3e4451
-  highlight MiniPickPreviewRegion guibg=#2c323c guifg=#e5c07b
-]])
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		vim.cmd([[
+			highlight MiniPickNormal guibg=NONE ctermbg=NONE
+			highlight MiniPickBorder guibg=NONE ctermbg=NONE
+			highlight MiniPickBorderBusy guibg=NONE ctermbg=NONE
+			highlight MiniPickBorderText guibg=NONE ctermbg=NONE
+			highlight MiniPickPrompt guibg=NONE ctermbg=NONE
+			highlight MiniPickItem guibg=NONE ctermbg=NONE
+			highlight MiniPickHeader guibg=NONE ctermbg=NONE
+			highlight MiniPickIconDirectory guibg=NONE ctermbg=NONE
+			highlight MiniPickIconFile guibg=NONE ctermbg=NONE
+			highlight MiniPickMatchCurrent guibg=NONE ctermbg=NONE
+			highlight MiniPickMatchMarked guibg=NONE ctermbg=NONE
+			highlight MiniPickMatchRanges guibg=NONE ctermbg=NONE
+		]])
+	end,
+})
