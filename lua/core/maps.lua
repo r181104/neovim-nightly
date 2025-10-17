@@ -7,7 +7,7 @@ local opts = { noremap = true, silent = true }
 
 -- General
 map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>", opts)
-map("n", ";", ":", opts)
+map({ "n", "v", "c", "x" }, ";", ":", opts)
 map("n", "<leader>cd", vim.cmd.Ex, opts)
 map("n", "<leader>so", ":update<CR> :source<CR>", opts)
 map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>", opts)
