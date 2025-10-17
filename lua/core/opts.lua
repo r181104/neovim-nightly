@@ -50,6 +50,7 @@ vim.o.fileencoding = "utf-8"
 
 -- Options for Neovide only
 vim.o.guifont = "JetBrainsMono Nerd Font:h22"
+vim.o.background = "dark"
 vim.g.neovide_padding_top = 0
 vim.g.neovide_padding_bottom = 0
 vim.g.neovide_padding_right = 0

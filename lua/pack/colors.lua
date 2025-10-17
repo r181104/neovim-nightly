@@ -1,17 +1,12 @@
 vim.pack.add({
-	{ src = "https://github.com/folke/tokyonight.nvim", priority = 1000 },
+	{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
 })
-require("tokyonight").setup({
-	style = "night",
-	light_style = "dark",
-	transparent = true,
-	terminal_colors = true,
-	styles = {
-		comments = { italic = true },
-		keywords = { italic = true },
-		functions = { bold = true },
-		sidebars = "dark",
-		floats = "dark",
-	},
-})
-vim.cmd([[colorscheme tokyonight-night]])
+
+vim.opt.background = "dark"
+vim.cmd.colorscheme("oxocarbon")
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#fcb001", bg = "none", bold = true })
