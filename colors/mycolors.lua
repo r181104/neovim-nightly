@@ -9,43 +9,44 @@ vim.g.colors_name = "mycolors"
 vim.o.termguicolors = true
 
 local colors = {
-	base00 = "#161616",
-	base01 = "#262626",
-	base02 = "#393939",
-	base03 = "#525252",
-	base04 = "#dde1e6",
-	base05 = "#f2f4f8",
-	base06 = "#ffffff",
+	-- Base Colors
+	base00 = "#0f0f1f",
+	base01 = "#1a1a2b",
+	base02 = "#2b2b42",
+	base03 = "#444466",
+	base04 = "#a6accd",
+	base05 = "#d0d0f0",
+	base06 = "#e5e5ff",
 
-	-- UI colors
-	bg = "#161616",
-	bg_subtle = "#262626",
-	bg_highlight = "#393939",
-	fg = "#f2f4f8",
-	fg_dim = "#dde1e6",
-	fg_subtle = "#525252",
+	-- UI Colors
+	bg = "#000000",
+	bg_subtle = "#1a1a2b",
+	bg_highlight = "#2b2b42",
+	fg = "#d0d0f0",
+	fg_dim = "#a6accd",
+	fg_subtle = "#444466",
 
-	-- Accent colors
-	red = "#ee5396",
-	orange = "#ff6f00",
-	yellow = "#ffe97b",
-	green = "#42be65",
-	cyan = "#08bdba",
-	cyan_bright = "#3ddbd9",
-	blue = "#33b1ff",
-	blue_light = "#82cfff",
-	purple = "#be95ff",
-	magenta = "#ff7eb6",
+	-- Accent Colors
+	red = "#ff6f86",
+	orange = "#ff9e6a",
+	yellow = "#fff3a0",
+	green = "#8fffa1",
+	cyan = "#88eeff",
+	cyan_bright = "#7ff1d3",
+	blue = "#84baff",
+	blue_light = "#b0caff",
+	purple = "#c48fff",
+	magenta = "#f6c3eb",
 
-	-- Status colors
-	error = "#ff8389",
-	warning = "#ffe97b",
-	info = "#82cfff",
-	hint = "#42be65",
+	-- Status Colors
+	error = "#ff6f86",
+	warning = "#fff3a0",
+	info = "#84baff",
+	hint = "#8fffa1",
 
-	border = "#525252",
-	visual = "#393939",
-	cursor = "#ffffff",
+	border = "#444466",
+	visual = "#2b2b42",
+	cursor = "#f6c3eb",
 
 	none = "NONE",
 }
@@ -373,18 +374,18 @@ hi("NuiComponentsTreeNodeClosed", { fg = colors.fg_dim })
 
 -- mini.nvim
 hi("MiniPickBorder", { fg = colors.border })
-hi("MiniPickBorderBusy", { fg = colors.yellow, style = "bold" })
-hi("MiniPickBorderText", { fg = colors.purple, style = "bold" })
-hi("MiniPickIconDirectory", { fg = colors.blue, style = "bold" })
+hi("MiniPickBorderBusy", { fg = colors.orange, style = "bold" })
+hi("MiniPickBorderText", { fg = colors.blue, style = "bold" })
+hi("MiniPickIconDirectory", { fg = colors.cyan_bright, style = "bold" })
 hi("MiniPickIconFile", { fg = colors.fg_dim })
 hi("MiniPickHeader", { fg = colors.purple, style = "bold" })
-hi("MiniPickMatchCurrent", { fg = colors.fg, bg = colors.bg_highlight, style = "bold" })
-hi("MiniPickMatchMarked", { fg = colors.cyan_bright, style = "bold" })
+hi("MiniPickMatchCurrent", { fg = colors.bg, bg = colors.blue, style = "bold" })
+hi("MiniPickMatchMarked", { fg = colors.green, style = "bold" })
 hi("MiniPickMatchRanges", { fg = colors.yellow, style = "bold" })
 hi("MiniPickNormal", { fg = colors.fg, bg = colors.bg })
-hi("MiniPickPreviewLine", { bg = colors.bg_highlight })
-hi("MiniPickPreviewRegion", { bg = colors.bg_highlight, style = "bold" })
-hi("MiniPickPrompt", { fg = colors.purple, style = "bold" })
+hi("MiniPickPreviewLine", { bg = colors.base01 })
+hi("MiniPickPreviewRegion", { bg = colors.base02, style = "bold" })
+hi("MiniPickPrompt", { fg = colors.magenta, style = "bold" })
 
 hi("MiniIndentscopeSymbol", { fg = colors.purple, style = "bold" })
 
