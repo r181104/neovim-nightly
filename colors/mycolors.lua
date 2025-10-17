@@ -8,50 +8,92 @@ end
 vim.g.colors_name = "mycolors"
 vim.o.termguicolors = true
 
-local colors = {
-	-- Base Colors
-	base00 = "#0f0f1f",
-	base01 = "#1a1a2b",
-	base02 = "#2b2b42",
-	base03 = "#444466",
-	base04 = "#a6accd",
-	base05 = "#d0d0f0",
-	base06 = "#e5e5ff",
+-- Convert HSL to Hex RGB
+local function hsl_to_hex(h, s, l)
+	s = s / 100
+	l = l / 100
+	local c = (1 - math.abs(2 * l - 1)) * s
+	local x = c * (1 - math.abs((h / 60) % 2 - 1))
+	local m = l - c / 2
+	local r, g, b
+
+	if h < 60 then
+		r, g, b = c, x, 0
+	elseif h < 120 then
+		r, g, b = x, c, 0
+	elseif h < 180 then
+		r, g, b = 0, c, x
+	elseif h < 240 then
+		r, g, b = 0, x, c
+	elseif h < 300 then
+		r, g, b = x, 0, c
+	else
+		r, g, b = c, 0, x
+	end
+
+	local function to_hex(n)
+		n = math.floor((n + m) * 255 + 0.5)
+		return string.format("%02x", n > 255 and 255 or (n < 0 and 0 or n))
+	end
+
+	return "#" .. to_hex(r) .. to_hex(g) .. to_hex(b)
+end
+
+-- Define a smoother HSL palette
+local hsl_colors = {
+	-- Base Colors (dark, muted backgrounds for contrast)
+	base00 = { 225, 15, 12 },
+	base01 = { 225, 20, 18 },
+	base02 = { 225, 30, 28 },
+	base03 = { 225, 40, 48 },
+	base04 = { 225, 45, 78 },
+	base05 = { 225, 35, 88 },
+	base06 = { 225, 40, 96 },
 
 	-- UI Colors
-	bg = "#000000",
-	bg_subtle = "#1a1a2b",
-	bg_highlight = "#2b2b42",
-	fg = "#d0d0f0",
-	fg_dim = "#a6accd",
-	fg_subtle = "#444466",
+	bg = { 225, 50, 7 },
+	bg_subtle = { 225, 25, 18 },
+	bg_highlight = { 225, 30, 28 },
+	fg = { 225, 30, 88 },
+	fg_dim = { 225, 20, 70 },
+	fg_subtle = { 225, 30, 50 },
 
-	-- Accent Colors
-	red = "#ff6f86",
-	orange = "#ff9e6a",
-	yellow = "#fff3a0",
-	green = "#8fffa1",
-	cyan = "#88eeff",
-	cyan_bright = "#7ff1d3",
-	blue = "#84baff",
-	blue_light = "#b0caff",
-	purple = "#c48fff",
-	magenta = "#f6c3eb",
+	-- Accent Colors (high saturation and varied lightness for pop)
+	red = { 350, 100, 65 },
+	orange = { 25, 100, 65 },
+	yellow = { 55, 100, 70 },
+	green = { 150, 100, 65 },
+	cyan = { 190, 100, 65 },
+	cyan_bright = { 175, 90, 70 },
+	blue = { 210, 100, 65 },
+	blue_light = { 210, 90, 75 },
+	purple = { 280, 90, 70 },
+	magenta = { 320, 90, 75 },
 
-	-- Status Colors
-	error = "#ff6f86",
-	warning = "#fff3a0",
-	info = "#84baff",
-	hint = "#8fffa1",
+	-- Status Colors (same as accents for visibility)
+	error = { 350, 100, 65 },
+	warning = { 55, 100, 70 },
+	info = { 210, 100, 65 },
+	hint = { 150, 100, 65 },
 
-	border = "#444466",
-	visual = "#2b2b42",
-	cursor = "#f6c3eb",
+	border = { 225, 40, 50 },
+	visual = { 225, 30, 28 },
+	cursor = { 320, 90, 80 },
 
 	none = "NONE",
 }
 
--- Helper function
+-- Convert palette from HSL to hex
+local colors = {}
+for k, v in pairs(hsl_colors) do
+	if type(v) == "table" then
+		colors[k] = hsl_to_hex(v[1], v[2], v[3])
+	else
+		colors[k] = v
+	end
+end
+
+-- Helper function for highlights
 local function hi(group, opts)
 	local cmd = "highlight " .. group
 	if opts.fg then
@@ -468,22 +510,21 @@ hi("markdownItalic", { style = "italic" })
 hi("markdownBold", { style = "bold" })
 hi("markdownBoldItalic", { style = "bold,italic" })
 
--- Terminal
-vim.g.terminal_color_0 = "#262626"
-vim.g.terminal_color_1 = "#ee5396"
-vim.g.terminal_color_2 = "#42be65"
-vim.g.terminal_color_3 = "#ffe97b"
-vim.g.terminal_color_4 = "#33b1ff"
-vim.g.terminal_color_5 = "#ff7eb6"
-vim.g.terminal_color_6 = "#3ddbd9"
-vim.g.terminal_color_7 = "#dde1e6"
-vim.g.terminal_color_8 = "#393939"
-vim.g.terminal_color_9 = "#ee5396"
-vim.g.terminal_color_10 = "#42be65"
-vim.g.terminal_color_11 = "#ffe97b"
-vim.g.terminal_color_12 = "#33b1ff"
-vim.g.terminal_color_13 = "#ff7eb6"
-vim.g.terminal_color_14 = "#3ddbd9"
-vim.g.terminal_color_15 = "#ffffff"
+vim.g.terminal_color_0 = hsl_to_hex(225, 10, 15)
+vim.g.terminal_color_1 = colors.red
+vim.g.terminal_color_2 = colors.green
+vim.g.terminal_color_3 = colors.yellow
+vim.g.terminal_color_4 = colors.blue
+vim.g.terminal_color_5 = colors.magenta
+vim.g.terminal_color_6 = colors.cyan
+vim.g.terminal_color_7 = hsl_to_hex(225, 15, 92)
+vim.g.terminal_color_8 = hsl_to_hex(225, 15, 40)
+vim.g.terminal_color_9 = colors.red
+vim.g.terminal_color_10 = colors.green
+vim.g.terminal_color_11 = colors.yellow
+vim.g.terminal_color_12 = colors.blue
+vim.g.terminal_color_13 = colors.magenta
+vim.g.terminal_color_14 = colors.cyan
+vim.g.terminal_color_15 = hsl_to_hex(225, 15, 98)
 
 return M
