@@ -18,9 +18,6 @@ notify.setup({
 	level = "INFO",
 	max_width = 50,
 	top_down = true,
-	on_open = function(win)
-		vim.api.nvim_win_set_option(win, "winblend", 20)
-	end,
 })
 
 vim.notify = notify
