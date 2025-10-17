@@ -3,6 +3,9 @@ vim.pack.add({
 })
 
 require("onedarkpro").setup({
+	plugins = {
+		all = true,
+	},
 	styles = {
 		types = "bold,italic",
 		methods = "NONE",

@@ -28,16 +28,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local buf = ev.buf
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
 		-- Helper to map keys easily
 		local function map(mode, lhs, rhs, desc)
 			vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
 		end
+
 		-- ===== LSP Navigation & Actions =====
 		map("n", "gd", vim.lsp.buf.definition, "Go to definition")
 		map("n", "gr", vim.lsp.buf.references, "Find references")
 		map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
 		map("n", "gk", vim.lsp.buf.hover, "Hover documentation")
 		map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+
 		-- Workspace
 		map("n", "<leader>aw", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
 		map("n", "<leader>rw", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
@@ -45,26 +48,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, "List workspace folders")
 		map("n", "<leader>sw", vim.lsp.buf.workspace_symbol, "Search workspace symbols")
+
 		-- Actions
 		map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 		map("n", "<leader>for", function()
 			vim.lsp.buf.format({ async = true })
 		end, "Format buffer")
+
 		-- Diagnostics
 		map("n", "<leader>fe", vim.diagnostic.open_float, "Show diagnostics in float")
 		map("n", "<leader>ce", vim.diagnostic.setqflist, "Send diagnostics to quickfix")
-		-- ===== LSP Completion =====
-		if client:supports_method("textDocument/completion") then
-			vim.opt.completeopt = { "menu", "menuone", "noinsert", "preview" }
-			vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
-			map("i", "<C-y>", function()
-				vim.lsp.completion.get({
-					show_popup = true,
-					position = vim.api.nvim_win_get_cursor(0),
-				})
-			end, "Trigger LSP completion at cursor")
-		end
 	end,
 })
 

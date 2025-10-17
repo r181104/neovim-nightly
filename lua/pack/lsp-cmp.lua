@@ -1,5 +1,6 @@
 vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", branch = "main" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/nvim-mini/mini.nvim", branch = "main" },
 })
 
@@ -12,7 +13,7 @@ require("blink.cmp").setup({
 	sources = {
 		default = { "lsp", "path", "snippets", "buffer" },
 	},
-	fuzzy = { implementation = "lua" }, -- switch to "rust" if Rust is installed
+	fuzzy = { implementation = "lua" }, -- Use rust for better performance
 	keymap = { preset = "default" },
 	signature = { enabled = true },
 	appearance = { nerd_font_variant = "mono" },
@@ -22,6 +23,18 @@ require("blink.cmp").setup({
 	},
 })
 
--- Export blink LSP capabilities for reuse
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-return { capabilities = capabilities }
+-- Set capabilities globally for ALL LSP servers
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
+
+-- Enable your LSP servers
+vim.lsp.enable({
+	"lua_ls",
+	"pyright",
+	"clangd",
+	"jdtls",
+	"rust_analyzer",
+	"vtsls",
+	"tailwindcss",
+})
