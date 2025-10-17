@@ -1,89 +1,140 @@
 vim.pack.add({
-	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", branch = "v3.x" },
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/stevearc/oil.nvim" },
 })
 
-require("neo-tree").setup({
-	close_if_last_window = true,
-	popup_border_style = "rounded",
-	enable_git_status = true,
-	enable_diagnostics = true,
-	sort_case_insensitive = true,
-	default_component_configs = {
-		container = { enable_character_fade = true },
-		indent = {
-			indent_size = 2,
-			padding = 1,
-			with_markers = true,
-			indent_marker = "│",
-			last_indent_marker = "└",
-			highlight = "NeoTreeIndentMarker",
-			with_expanders = true,
-			expander_collapsed = "",
-			expander_expanded = "",
-			expander_highlight = "NeoTreeExpander",
-		},
-		icon = {
-			folder_closed = "",
-			folder_open = "",
-			folder_empty = "",
-			default = "",
-		},
-		modified = { symbol = "●", highlight = "NeoTreeModified" },
-		name = { trailing_slash = false, use_git_status_colors = true },
-		git_status = {
-			symbols = {
-				added = "",
-				modified = "柳",
-				deleted = "",
-				renamed = "柳",
-				untracked = "",
-				ignored = "◌",
-				unstaged = "✗",
-				staged = "✓",
-				conflict = "",
-			},
-		},
+require("oil").setup({
+	default_file_explorer = true,
+	columns = {
+		"icon",
 	},
-	window = {
-		position = "right",
-		width = 20,
-		auto_resize = true,
-		mapping_options = { noremap = true, nowait = true },
-		mappings = {
-			["<space>"] = "toggle_node",
-			["<2-LeftMouse>"] = "open",
-			["<cr>"] = "open",
-			["S"] = "open_split",
-			["s"] = "open_vsplit",
-			["C"] = "close_node",
-			["R"] = "refresh",
-			["a"] = { "add", config = { show_path = "relative" } },
-			["d"] = "delete",
-			["r"] = "rename",
-			["y"] = "copy_to_clipboard",
-			["x"] = "cut_to_clipboard",
-			["p"] = "paste_from_clipboard",
-			["q"] = "close_window",
+	buf_options = {
+		buflisted = false,
+		bufhidden = "hide",
+	},
+	win_options = {
+		wrap = false,
+		signcolumn = "no",
+		cursorcolumn = false,
+		foldcolumn = "0",
+		spell = false,
+		list = false,
+		conceallevel = 3,
+		concealcursor = "nvic",
+	},
+	delete_to_trash = false,
+	skip_confirm_for_simple_edits = false,
+	prompt_save_on_select_new_entry = true,
+	cleanup_delay_ms = 2000,
+	lsp_file_methods = {
+		enabled = true,
+		timeout_ms = 1000,
+		autosave_changes = false,
+	},
+	constrain_cursor = "editable",
+	watch_for_changes = false,
+	keymaps = {
+		["?"] = { "actions.show_help", mode = "n" },
+		["<CR>"] = "actions.select",
+		["<C-v>"] = { "actions.select", opts = { vertical = true } },
+		["<C-x>"] = { "actions.select", opts = { horizontal = true } },
+		["<C-t>"] = { "actions.select", opts = { tab = true } },
+		["<C-p>"] = "actions.preview",
+		["q"] = { "actions.close", mode = "n" },
+		["r"] = "actions.refresh",
+		["<C-h>"] = { "actions.parent", mode = "n" }, -- Ctrl+h to go up (parent directory)
+		["<C-l>"] = "actions.select", -- Ctrl+l to open
+		["_"] = { "actions.open_cwd", mode = "n" },
+		["cd"] = { "actions.cd", mode = "n" },
+		["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+		["s"] = { "actions.change_sort", mode = "n" },
+		["x"] = "actions.open_external",
+		["."] = { "actions.toggle_hidden", mode = "n" },
+		["d"] = { "actions.toggle_trash", mode = "n" },
+	},
+	use_default_keymaps = false,
+	view_options = {
+		show_hidden = false,
+		is_hidden_file = function(name)
+			return name:match("^%.") ~= nil
+		end,
+		is_always_hidden = function()
+			return false
+		end,
+		natural_order = "fast",
+		case_insensitive = false,
+		sort = {
+			{ "type", "asc" },
+			{ "name", "asc" },
 		},
+		highlight_filename = function()
+			return nil
+		end,
 	},
-	filesystem = {
-		filtered_items = {
-			visible = true,
-			hide_dotfiles = false,
-			hide_gitignored = false,
-		},
-		follow_current_file = { enabled = true },
-		use_libuv_file_watcher = true,
+	extra_scp_args = {},
+	git = {
+		add = function()
+			return false
+		end,
+		mv = function()
+			return false
+		end,
+		rm = function()
+			return false
+		end,
 	},
-	buffers = {
-		follow_current_file = { enabled = true },
-		group_empty_dirs = true,
-		show_unloaded = true,
+	float = {
+		padding = 2,
+		max_width = 0,
+		max_height = 0,
+		border = nil,
+		win_options = { winblend = 0 },
+		get_win_title = nil,
+		preview_split = "auto",
+		override = function(conf)
+			return conf
+		end,
 	},
-	git_status = { window = { position = "float" } },
+	preview_win = {
+		update_on_cursor_moved = true,
+		preview_method = "fast_scratch",
+		disable_preview = function()
+			return false
+		end,
+		win_options = {},
+	},
+	confirmation = {
+		max_width = 0.9,
+		min_width = { 40, 0.4 },
+		max_height = 0.9,
+		min_height = { 5, 0.1 },
+		border = nil,
+		win_options = { winblend = 0 },
+	},
+	progress = {
+		max_width = 0.9,
+		min_width = { 40, 0.4 },
+		max_height = { 10, 0.9 },
+		min_height = { 5, 0.1 },
+		border = nil,
+		minimized_border = "none",
+		win_options = { winblend = 0 },
+	},
+	ssh = {
+		border = nil,
+	},
+	keymaps_help = {
+		border = nil,
+	},
 })
 
-vim.api.nvim_set_keymap("n", "<leader>e", ":Neotree toggle<CR>", { noremap = true, silent = true })
+local function toggle_oil()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_get_option(buf, "filetype") == "oil" and vim.api.nvim_buf_is_loaded(buf) then
+			vim.cmd("bd! " .. buf)
+			return
+		end
+	end
+	vim.cmd("Oil")
+end
+
+vim.api.nvim_set_keymap("n", "<leader>e", "", { noremap = true, silent = true, callback = toggle_oil })
